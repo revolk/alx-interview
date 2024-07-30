@@ -1,7 +1,25 @@
 #!/usr/bin/python3
 
-canUnlockAll = __import__('0-lockboxes').canUnlockAll
+def canUnlockAll(boxes):
+    """تحديد ما إذا كان يمكن فتح جميع الصناديق."""
+    if not boxes:
+        return False
 
+    n = len(boxes)
+    opened = [False] * n
+    queue = [0]  # ابدأ بالصندوق الأول
+    opened[0] = True
+
+    while queue:
+        box = queue.pop(0)
+        for key in boxes[box]:
+            if key < n and not opened[key]:
+                opened[key] = True
+                queue.append(key)
+
+    return all(opened)
+
+# اختبار الدالة
 boxes = [[1], [2], [3], [4], []]
 print(canUnlockAll(boxes))
 
